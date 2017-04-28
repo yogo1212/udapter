@@ -97,6 +97,7 @@ leave:
 
 void udapter_side_stop(udapter_side_t *side)
 {
-	bufferevent_free(side->bev);
+	if (side->bev)
+		bufferevent_free(side->bev);
 	evt_ssl_free(side->essl);
 }
