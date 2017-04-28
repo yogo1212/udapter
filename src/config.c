@@ -82,8 +82,8 @@ uint8_t config_ssl_verify_depth_##n(void)\
 {\
 	const char *str = getenv(N "_SSL_VERIFY_DEPTH");\
 	if (!str) {\
-		log_error("assuming " N "_SSL_VERIFY_DEPTH = 2");\
-		return 2;\
+		log_error("assuming " N "_SSL_VERIFY_DEPTH = 0 (no validation)");\
+		return 0;\
 	}\
 	return to_uint(str);\
 }

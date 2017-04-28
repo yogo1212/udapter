@@ -40,8 +40,10 @@ static const char *udapter_side_ssl_config(evt_ssl_t *essl, SSL_CTX *ssl_ctx)
 		if (SSL_CTX_load_verify_locations(ssl_ctx, side->ssl_ca_file, side->ssl_ca_dir) != 1)
 			return "couldn't set CA";
 
-		SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT, NULL);
-		SSL_CTX_set_verify_depth(ssl_ctx, side->ssl_verify_depth);
+		if (side->ssl_verify_depth != 0) {
+			SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT, NULL);
+			SSL_CTX_set_verify_depth(ssl_ctx, side->ssl_verify_depth);
+		}
 	}
 
 	if (SSL_CTX_use_certificate_file(ssl_ctx, side->ssl_cert, SSL_FILETYPE_PEM) != 1)
